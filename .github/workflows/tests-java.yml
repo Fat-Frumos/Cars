@@ -1,0 +1,47 @@
+name: Java install openjdk-8-jdk
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 18
+        uses: actions/setup-java@v2
+        with:
+          java-version: '18'
+          distribution: 'adopt'
+          cache: maven
+
+      - name: Start with Maven
+        run: pwd
+
+      - name: Start with Maven
+        run: source .bash_profile
+
+      - name: sudo apt-get update
+        run: sudo apt-get update
+
+      - name: sudo apt-get install openjdk-8-jdk
+        run: sudo apt-get install openjdk-8-jdk -y
+
+      - name: openjdk-8-jre
+        run: sudo apt-get install openjdk-8-jre -y
+
+      - name: java -version
+        run: java --version
+
+      - name: Run with Maven
+        run: java $JAVA_OPTS -jar target/sql-1.0-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS
+
+      - name: Run maven script
+        uses: guillonapa/action-maven-cli/jdk8@master
+        with:
+          lifecycle: 'clean package test'
