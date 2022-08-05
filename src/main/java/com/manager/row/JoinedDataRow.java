@@ -27,9 +27,9 @@ public final class JoinedDataRow<K, V1, V2> extends DataRow<K, V1> {
     @Override
     public String toString() {
         return "{ " +
-                "key: " + key +
-                ", city: \"" + city +
-                "\", country: \"" + country +
+                "\"key\": " + key +
+                ", \"city\": \"" + city +
+                "\", \"country\": \"" + country +
                 "\" }";
     }
 }

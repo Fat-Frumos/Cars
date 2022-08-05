@@ -3,34 +3,24 @@ package com.manager.row;
 import com.manager.operation.join.InnerJoinOperation;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedHashSet;
+
+import static com.manager.row.Util.getCities;
+import static com.manager.row.Util.getCounties;
 
 class JoinedDataRowTest {
-
-    List<DataRow> countries = new ArrayList<>();
-    List<DataRow> cities = new ArrayList<>();
-
-    @Test
-    void setUp() {
-
-        cities.add(new DataRow<>(0, "Kiev"));
-        cities.add(new DataRow<>(1, "Berlin"));
-        cities.add(new DataRow<>(2, "Paris"));
-
-        countries.add(new DataRow<>(0, "Ukraine"));
-        countries.add(new DataRow<>(1, "Germany"));
-        countries.add(new DataRow<>(3, "France"));
-
-    }
+    LinkedHashSet<DataRow<Integer, String>> countries = getCounties();
+    LinkedHashSet<DataRow<Integer, String>> cities = getCities();
 
     @Test
     void mapper() {
 
         InnerJoinOperation collection = new InnerJoinOperation();
-        collection.join(cities, countries);
-        collection.toString();
+        Collection join = collection.join(cities, countries);
+        for (Object o : join) {
+            System.out.println(o);
+        }
     }
 
     private static String getString(JoinedDataRow<Integer, String, String> dataRow) {
@@ -51,6 +41,7 @@ class JoinedDataRowTest {
 
     @Test
     void testToString() {
+//        System.out.println(getString());
     }
 
     @Test
@@ -63,9 +54,5 @@ class JoinedDataRowTest {
 
     @Test
     void getRight() {
-    }
-
-    @Test
-    void builder() {
     }
 }

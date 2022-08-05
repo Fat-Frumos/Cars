@@ -25,6 +25,8 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                    <fork>true</fork>
+                    <executable>/usr/lib/jvm/java-1.8-openjdk-amd64/bin/javac</executable>
                 </configuration>
             </plugin>
         </plugins>

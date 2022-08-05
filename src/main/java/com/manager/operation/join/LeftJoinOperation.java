@@ -4,28 +4,27 @@ import com.manager.operation.JoinOperation;
 import com.manager.row.DataRow;
 import com.manager.row.JoinedDataRow;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class LeftJoinOperation<K, V1, V2> implements JoinOperation<DataRow<K, V1>, DataRow<K, V2>, JoinedDataRow<K, V1, V2>> {
     @Override
     public Collection<JoinedDataRow<K, V1, V2>> join(Collection<DataRow<K, V1>> leftRow, Collection<DataRow<K, V2>> rightRow) {
 
-        List<DataRow<K, V1>> cities = (List<DataRow<K, V1>>) leftRow;
-        List<DataRow<K, V2>> countries = (List<DataRow<K, V2>>) rightRow;
+        List<JoinedDataRow<K, V1, V2>> joinedRow = new ArrayList<>();
+        JoinedDataRow<K, V1, V2> dataRow = null;
+        Set<K> keys = new HashSet<>();
 
-        Collection<JoinedDataRow<K, V1, V2>> joinedData = new ArrayList<>();
-
-        cities.forEach(city -> {
-            countries.stream()
-                    .filter(country -> city.key() == country.key())
-                    .map(country -> new JoinedDataRow<>(city.key(), city.value(), country.value()))
-                    .forEach(joinedData::add);
-
-                joinedData.add(new JoinedDataRow<>(city.key(), city.value(), null));
-
-        });
-        return joinedData;
+        for (DataRow<K, V1> city : leftRow) {
+            for (DataRow<K, V2> country : rightRow) {
+                if (city.key() == country.key()) {
+                    keys.add(city.key());
+                    dataRow = new JoinedDataRow<>(city.key(), city.value(), country.value());
+                } else if (!keys.contains(city.key())) {
+                    dataRow = (new JoinedDataRow<>(city.key(), city.value(), null));
+                }
+            }
+            joinedRow.add(dataRow);
+        }
+        return joinedRow;
     }
 }
