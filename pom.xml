@@ -15,28 +15,10 @@
         <maven-surefire-plugin.version>3.5.1</maven-surefire-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <junit-jupiter-engine.version>5.9.0</junit-jupiter-engine.version>
     </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M6</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <fork>true</fork>
-                    <executable>/usr/lib/jvm/java-1.8-openjdk-amd64/bin/javac</executable>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -46,9 +28,48 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.9.0</version>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter-engine.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <overwrite>true</overwrite>
+                </configuration>
+            </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <mainClass>com.generic.Main</mainClass>
+                        <executable>java</executable>
+                        <includeProjectDependencies>true</includeProjectDependencies>
+                        <includePluginDependencies>true</includePluginDependencies>
+                        <classpathScope>compile</classpathScope>
+                    </configuration>
+
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
+

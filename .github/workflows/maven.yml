@@ -26,12 +26,11 @@ jobs:
     - name: Test with Maven
       run: mvn test
 
-
-    - name: mvn exec:java
+    - name: exec:java
       run: mvn exec:java
 
-    - name: pwd
-      run: pwd
+    - name: clean install test surefire-report:report
+      run: mvn clean install test surefire-report:report
 
     - name: Run with Maven
       run: java $JAVA_OPTS -jar target/sql-1.0-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS
