@@ -20,21 +20,26 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-
       - name: Start with Maven
         run: source .bash_profile
+
+      - name: sudo apt-get update
+        run: sudo apt-get update
+
+      - name: sudo apt-get install openjdk-8-jdk
+        run: sudo apt-get install openjdk-8-jdk -y
+
+      - name: openjdk-8-jre
+        run: sudo apt-get install openjdk-8-jre -y
 
       - name: java -version
         run: mvn -B package --file pom.xml
 
-      - name: java -version
-        run: java --version
+      - name: exec:java
+        run: mvn exec:java
 
-      - name: Start with Maven
-        run: pwd
-
-      - name: Run with Maven
-        run: java $JAVA_OPTS -jar target/sql-1.0-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS
+      - name: clean install test surefire-report:report
+        run: mvn clean install test surefire-report:report
 
       - name: Run maven script
         uses: guillonapa/action-maven-cli/jdk8@master

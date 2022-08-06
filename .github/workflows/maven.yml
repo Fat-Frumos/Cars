@@ -20,20 +20,18 @@ jobs:
         distribution: 'adopt'
         cache: maven
 
+    - name: Test with Maven
+      run: mvn test
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    - name: Test with Maven
-      run: mvn test
 
     - name: exec:java
       run: mvn exec:java
 
     - name: clean install test surefire-report:report
       run: mvn clean install test surefire-report:report
-
-    - name: Run with Maven
-      run: java $JAVA_OPTS -jar target/sql-1.0-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS
 
     - name: Run maven script
       uses: guillonapa/action-maven-cli/jdk8@master
