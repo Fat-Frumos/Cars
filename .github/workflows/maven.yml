@@ -26,14 +26,16 @@ jobs:
     - name: Test with Maven
       run: mvn test
 
-    - name: Start with Maven
-      run: pwd
 
-    - name: Start with Maven
+    - name: mvn exec:java
       run: mvn exec:java
+
+    - name: pwd
+      run: pwd
 
     - name: Run with Maven
       run: java $JAVA_OPTS -jar target/sql-1.0-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS
+
     - name: Run maven script
       uses: guillonapa/action-maven-cli/jdk8@master
       with:

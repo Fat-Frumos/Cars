@@ -1,4 +1,4 @@
-package com.manager.operation;
+package com.generic.operation;
 
 import java.util.Collection;
 
