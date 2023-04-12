@@ -1,7 +1,8 @@
 import os
 from flask import Flask, request
 from telegram import Bot, Update
-from telegram.ext import Dispatcher, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext.dispatcher import Dispatcher
 
 TOKEN = '1016015048:AAECjJ8bVoWFiTPtmSuxIS3mStC3EtPzBbY'
 server = Flask(__name__)
