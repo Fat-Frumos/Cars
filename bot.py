@@ -4,7 +4,6 @@ from flask import Flask
 
 server = Flask(__name__)
 
-
 @server.route('/<word>')
 def get_info(word):
 
@@ -12,7 +11,6 @@ def get_info(word):
 
     response = requests.get(url)
 
-# return a custom response if an invalid word is provided
     if response.status_code == 404:
         error_response = 'We are not able to provide any information about your word. Please confirm that the word is ' \
                          'correctly spelt or try the search again at a later time.'
