@@ -1,5 +1,5 @@
-from flask import Flask, jsonify, request
-import nltk
+from flask import Flask, request, jsonify
+from nltk.tree import Tree
 
 app = Flask(__name__)
 
@@ -8,38 +8,64 @@ def paraphrase():
 
     tree_str = request.args.get('tree')
     if not tree_str:
-        return jsonify({'error': 'tree parameter is required'}), 400
-
-
+        return jsonify({'error': 'Missing "tree" parameter.'}), 400
+    
     try:
-        tree = nltk.Tree.fromstring(tree_str)
-    except ValueError as e:
-        return jsonify({'error': str(e)}), 400
+        tree = Tree.fromstring(tree_str)
+    except ValueError:
+        return jsonify({'error': 'Invalid tree string.'}), 400
+    
+    limit = int(request.args.get('limit', 20))
 
+    nps = find_nps(tree)
+    paraphrases = generate_paraphrases(tree, nps, limit)
+    
 
-    limit = request.args.get('limit', default=20, type=int)
+    return jsonify({'paraphrases': list(paraphrases)})
+    
 
-
+def find_nps(tree):
     nps = []
-    for subtree in tree.subtrees():
-        if subtree.label() == 'NP':
-            nps.append(subtree)
+    for subtree in tree.subtrees(filter=lambda t: t.label() == 'NP'):
+        np_str = ' '.join(subtree.leaves())
+        nps.append(np_str)
+    return nps
 
 
-    paraphrases = []
-    for i, np in enumerate(nps):
-        for j in range(i+1, len(nps)):
+def generate_paraphrases(tree, nps, limit):
+    paraphrases = set()
+    for i, np1 in enumerate(nps):
+        for j, np2 in enumerate(nps[i+1:], i+1):
             new_tree = tree.copy(deep=True)
-            # np1, np2 = new_tree.leaf_treeposition(int(np.leaves()[0])), new_tree.leaf_treeposition(int(nps[j].leaves()[0]))
-            np1, np2 = new_tree.leaf_treeposition(np.leaf_treeposition(0)), new_tree.leaf_treeposition(nps[j].leaf_treeposition(0))
-            new_tree[np1[:-1]][np1[-1]] = nps[j]
-            new_tree[np2[:-1]][np2[-1]] = np
-            paraphrase_str = str(new_tree)
-            if paraphrase_str not in paraphrases and len(paraphrases) < limit:
-                paraphrases.append(paraphrase_str)
+            np1_subtree, np2_subtree = find_np_subtrees(new_tree, np1, np2)
+            if np1_subtree and np2_subtree:
+                swap_nps(np1_subtree, np2_subtree)
+                paraphrased_tree = str(new_tree)
+                paraphrases.add(paraphrased_tree)
+                if len(paraphrases) >= limit:
+                    return paraphrases
+    return paraphrases
 
 
-    return jsonify({'paraphrases': [{'tree': p} for p in paraphrases]}), 200
+def find_np_subtrees(tree, np1, np2):
+    np1_subtree = None
+    np2_subtree = None
+    for subtree in tree.subtrees(filter=lambda t: t.label() == 'NP'):
+        np_str = ' '.join(subtree.leaves())
+        if np_str == np1:
+            np1_subtree = subtree
+        elif np_str == np2:
+            np2_subtree = subtree
+        if np1_subtree and np2_subtree:
+            break
+    return np1_subtree, np2_subtree
+
+
+def swap_nps(np1_subtree, np2_subtree):
+    np1_subtree.clear()
+    np1_subtree.extend(np2_subtree)
+    np2_subtree.clear()
+    np2_subtree.extend(np1_subtree)
 
 if __name__ == '__main__':
     app.run()
