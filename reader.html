@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Book Reader</title>
+    <style>
+        .container {
+            width: 800px;
+            height: 500px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .language1, .language2 {
+            width: 50%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            overflow: auto;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        .language1 {
+            left: 0;
+            background-color: #f9f9f9;
+        }
+
+        .language2 {
+            right: 0;
+            background-color: #ddd;
+        }
+        span:hover {
+        background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="book-content"></div>
+
+	<!-- <div class="container">
+		<div class="language1"></div>
+		<div class="language2"></div>
+	</div> -->
+    
+    <script src="reader.js"></script>
+
+<script>
+//         const book = {
+// 	language1: [
+// 		"Chapter 1 in language 1",
+// 		"Chapter 2 in language 1",
+// 		"Chapter 3 in language 1"
+// 	],
+// 	language2: [
+// 		"Chapter 1 in language 2",
+// 		"Chapter 2 in language 2",
+// 		"Chapter 3 in language 2"
+// 	]
+// };
+
+// const language1Container = document.querySelector(".language1");
+// const language2Container = document.querySelector(".language2");
+
+// function loadChapter(chapterNumber) {
+// 	language1Container.innerHTML = book.language1[chapterNumber];
+// 	language2Container.innerHTML = book.language2[chapterNumber];
+// }
+
+// loadChapter(0);
+// const prevButton = document.querySelector(".prev");
+// const nextButton = document.querySelector(".next");
+
+// let currentChapter = 0;
+
+// prevButton.addEventListener("click", function() {
+// 	if (currentChapter > 0) {
+// 		currentChapter--;
+// 		loadChapter(currentChapter);
+// 	}
+// });
+
+// nextButton.addEventListener("click", function() {
+// 	if (currentChapter < book.language1.length - 1) {
+// 		currentChapter++;
+// 		loadChapter(currentChapter);
+// 	}
+// });
+    </script>
+</body>
+</html>
