@@ -22,7 +22,7 @@ def paraphrase():
             np_index = np_index.index(int(np_index[-1]))
             new_np_index = new_tree.leaf_treeposition(new_np[0].label())
             new_tree[0][np_index[:-1]][np_index[-1]] = new_np
-            new_tree[0][new_np_index[:-1]][new_np_index[-1]] = np
+            new_tree[0][new_np_index[:-1]][int(new_np_index[-1])] = np
             paraphrases.append(str(new_tree))
 
     try:
