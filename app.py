@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 @app.route('/paraphrase', methods=['GET'])
 def paraphrase():
+
     tree_string = request.args.get('tree', '')
     tree = Tree.fromstring(tree_string)
     limit = int(request.args.get('limit', 20))
@@ -23,8 +24,12 @@ def paraphrase():
             new_tree[0][np_index[:-1]][np_index[-1]] = new_np
             new_tree[0][new_np_index[:-1]][new_np_index[-1]] = np
             paraphrases.append(str(new_tree))
-
-    return jsonify(paraphrases[:limit])
+    try:
+        tree_string = request.args.get('tree')
+        tree = Tree.fromstring(tree_string)
+        return jsonify({'paraphrase': str(tree)})
+    except (ValueError, TypeError):
+        return jsonify({'error': 'Invalid input'}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)    
