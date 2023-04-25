@@ -30,7 +30,8 @@ def paraphrase():
     for i, np in enumerate(nps):
         for j in range(i+1, len(nps)):
             new_tree = tree.copy(deep=True)
-            np1, np2 = new_tree.leaf_treeposition(int(np.leaves()[0])), new_tree.leaf_treeposition(int(nps[j].leaves()[0]))
+            # np1, np2 = new_tree.leaf_treeposition(int(np.leaves()[0])), new_tree.leaf_treeposition(int(nps[j].leaves()[0]))
+            np1, np2 = new_tree.leaf_treeposition(np.leaf_treeposition(0)), new_tree.leaf_treeposition(nps[j].leaf_treeposition(0))
             new_tree[np1[:-1]][np1[-1]] = nps[j]
             new_tree[np2[:-1]][np2[-1]] = np
             paraphrase_str = str(new_tree)
