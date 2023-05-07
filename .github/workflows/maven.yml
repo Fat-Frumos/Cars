@@ -33,7 +33,3 @@ jobs:
     - name: clean install test surefire-report:report
       run: mvn clean install test surefire-report:report
 
-    - name: Run maven script
-      uses: guillonapa/action-maven-cli/jdk8@master
-      with:
-        lifecycle: 'clean package test'
