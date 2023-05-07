@@ -14,7 +14,7 @@ def index():
 
 @app.route('/parse', methods=['POST'])
 def parse():
-        url = request.form['text']
+    url = request.form['text']
     with open(url, 'r') as f:
         html_content = f.read()
 
