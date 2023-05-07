@@ -1,4 +1,3 @@
-// Fancybox Configuration
 $('[data-fancybox="gallery"]').fancybox({
   buttons: [
     "slideShow",
