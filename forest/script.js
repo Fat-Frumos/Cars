@@ -4,13 +4,15 @@ let gallery = document.getElementById('image-gallery')
 let pageIndicator = document.getElementById('page')
 let galleryDots = document.getElementById('gallery-dots');
 
+
 let images= [];
-for (let i = 6; i < 102; i++) {
+for (let i = 6; i < 108; i++) {
   images.push({
     title: "Image " + (i + 1),
     source: "photo_" + i + ".jpg"
   });
 }
+
 
 let perPage = 8;
 let page = 1;
