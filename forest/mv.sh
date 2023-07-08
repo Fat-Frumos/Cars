@@ -1,3 +1,12 @@
-for i in {6..101}; do
-    mv photo_"$i"@07-05-2023_19-03-0[0-9].jpg photo_"$i".jpg
+#!/bin/bash
+
+counter=166
+
+for file in photo_*; do
+    extension="${file##*.}"
+    new_name="photo_${counter}.${extension}"
+    
+    mv "$file" "$new_name"
+    
+    counter=$((counter + 1))
 done
