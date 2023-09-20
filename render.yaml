@@ -1,5 +1,4 @@
 version: '3.4'
-
 services:
   server:
     container_name: course-app-server
@@ -16,7 +15,6 @@ services:
       - mongodb
     networks:
       - course-app-network
-
   mongodb:
     image: mongo:latest
     volumes:
@@ -26,7 +24,6 @@ services:
       - 27017:27017
     networks:
       - course-app-network
-
   mongo-seed:
     build: docker/mongo-seed
     depends_on:
@@ -36,7 +33,6 @@ services:
       WAIT_AFTER_HOSTS: 30
     networks:
       - course-app-network
-
 networks:
   course-app-network:
-   external: true
+    external: true
