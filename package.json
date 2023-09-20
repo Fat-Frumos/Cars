@@ -1,0 +1,83 @@
+{
+    "name": "course-app-server",
+    "version": "0.0.1",
+    "description": "",
+    "author": "",
+    "license": "MIT",
+    "scripts": {
+        "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "postinstall": "npm run prestart:prod",
+        "format": "prettier --write \"src/**/*.ts\"",
+        "start": "ts-node -r tsconfig-paths/register src/main.ts",
+        "start:dev": "nodemon",
+        "start:debug": "nodemon --config nodemon-debug.json",
+        "prestart:prod": "npm run build",
+        "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build",
+        "start:prod": "node dist/main.js",
+        "lint": "tslint -p tsconfig.json -c tslint.json",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:cov": "jest --coverage",
+        "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+        "test:e2e": "jest --config ./test/jest-e2e.json"
+    },
+    "dependencies": {
+        "@nestjs/common": "^6.10.2",
+        "@nestjs/core": "^6.10.2",
+        "@nestjs/platform-express": "^6.10.2",
+        "@nestjs/swagger": "3.1.0",
+        "@types/dotenv": "^8.2.0",
+        "@types/passport-jwt": "^3.0.3",
+        "@types/request-promise": "^4.1.45",
+        "bcrypt": "^3.0.7",
+        "config": "^3.2.4",
+        "dotenv": "^8.2.0",
+        "mongoose": "^5.7.12",
+        "passport": "^0.4.0",
+        "passport-jwt": "^4.0.0",
+        "reflect-metadata": "^0.1.13",
+        "request": "^2.88.0",
+        "request-promise": "^4.2.5",
+        "rimraf": "^3.0.0",
+        "rxjs": "^6.5.3",
+        "swagger-ui-express": "^4.1.2",
+        "ts-node": "^8.5.2",
+        "tsconfig-paths": "^3.9.0",
+        "typescript": "^3.7.2"
+    },
+    "devDependencies": {
+        "@nestjs/testing": "^6.10.2",
+        "@types/bcrypt": "^3.0.0",
+        "@types/express": "^4.17.2",
+        "@types/jest": "^24.0.23",
+        "@types/mongoose": "^5.5.32",
+        "@types/node": "^12.12.14",
+        "@types/supertest": "^2.0.8",
+        "jest": "^24.9.0",
+        "nodemon": "^2.0.1",
+        "prettier": "^1.19.1",
+        "supertest": "^4.0.2",
+        "ts-jest": "^24.2.0",
+        "ts-node": "^8.5.2",
+        "tsconfig-paths": "^3.9.0",
+        "tslint": "5.20.1",
+        "typescript": "^3.7.2"
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "ts"
+        ],
+        "rootDir": "src",
+        "testRegex": ".spec.ts$",
+        "transform": {
+            "^.+\\.(t|j)s$": "ts-jest"
+        },
+        "coverageDirectory": "../coverage",
+        "testEnvironment": "node"
+    },
+    "engines": {
+        "node": "10.15.1"
+    }
+}
