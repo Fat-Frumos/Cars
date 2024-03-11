@@ -5,10 +5,10 @@ let pageIndicator = document.getElementById('page')
 let galleryDots = document.getElementById('gallery-dots');
 
 
-let images= [];
-for (let i = 6; i < 429; i++) {
+let images = [];
+for (let i = 6; i < 585; i++) {
   images.push({
-    title: "Image " + (i + 1),
+    title: "#" + (i + 1),
     source: "photo_" + i + ".jpg"
   });
 }
@@ -77,7 +77,12 @@ function showImages() {
   }
   
   dots[page - 1].classList.add('active');
-  
+
+  // Sort images by width
+  images.sort(function(a, b) {
+    return getImageWidth(a.source) - getImageWidth(b.source);
+  });
+
   for (let i = offset; i < offset + perPage; i++) {
     if ( images[i] ) {
       let template = document.createElement('div');
@@ -113,7 +118,14 @@ function showImages() {
   
 }
 
+function getImageWidth(url) {
+  let img = new Image();
+  img.src = url;
+  return img.width;
+}
+
 showImages();
+
 
 
 let modal = document.getElementById('modal');
