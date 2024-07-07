@@ -6,7 +6,7 @@ let galleryDots = document.getElementById('gallery-dots');
 
 
 let images = [];
-for (let i = 6; i < 585; i++) {
+for (let i = 6; i < 779; i++) {
   images.push({
     title: "#" + (i + 1),
     source: "photo_" + i + ".jpg"
