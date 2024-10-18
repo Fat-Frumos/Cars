@@ -1,6 +1,6 @@
 #!/bin/bash
 
-counter=585
+counter=779
 
 for file in photo_*; do
     extension="${file##*.}"
